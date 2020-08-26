@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/1992106/mini-koa/issues"
   },
-  "homepage": "https://github.com/1992106/mini-koa#readme"
+  "homepage": "https://github.com/1992106/mini-koa#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "koa-static": "^5.0.0"
+  }
 }
