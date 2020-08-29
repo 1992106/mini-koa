@@ -1,4 +1,4 @@
-const { createServer } = require('http');
+const http = require('http');
 
 class Express {
 
@@ -35,21 +35,22 @@ class Express {
     } else {
       router = {
         path: '/',
-        handle
+        handle: path
       }
     }
+    return router;
   }
 
   match(method, url) {
-    const midllewareList = [];
-    const allRouter = [...this.routes[method], ...this.routes.all];
+    const matchedList = [];
+    const allRouter = [...this.routes.all, ...this.routes[method]];
     allRouter.forEach((item) => {
-      item.path === url && midllewareList.push(item.handle);
+      item.path === url && matchedList.push(item.handle);
     });
-    return midllewareList;
+    return matchedList;
   }
 
-  handle(req, res, handle) {
+  handle(req, res, stack) {
     const next = () => {
       // 拿到第一个匹配的中间件
 			const middleware = stack.shift()
@@ -62,15 +63,17 @@ class Express {
   }
 
   handleRequest() {
-    return function(req, res) {
+    return (req, res) => {
       const method = req.method.toLowerCase();
       const url = req.url;
-      const matchList = this.match(method, url);
-      this.handle(matchList);
+      const matchedList = this.match(method, url);
+      this.handle(req, res, matchedList);
     }
   }
 
   listen(...args) {
-    createServer(this.handleRequest.bind(this)).listen(...args);
+    http.createServer(this.handleRequest()).listen(...args);
   }
 }
+
+module.exports = Express
