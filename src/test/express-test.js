@@ -1,3 +1,5 @@
+// https://segmentfault.com/a/1190000022536921
+
 const Express = require('./express')
 
 // 本地 http 请求的实例
