@@ -19,7 +19,7 @@ class MiniKoa extends EventEmitter {
   }
 
   listen(...args) {
-    const server = http.createServer(this.handleRequest());
+    const server = http.createServer(this.handleRequest);
     server.listen(...args);
   }
 
